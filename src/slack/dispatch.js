@@ -112,7 +112,9 @@ const getVolunteers = (volunteers) => {
   if (volunteers.length > 0) {
     // Heading for volunteers
     volObject.push(
-      getSection(`*Here are the ${volunteers.length} closest volunteers*`)
+      getSection(
+        `*Here are the ${volunteers.length} closest or most suitable volunteers*`
+      )
     );
 
     // Prepare the detailed volunteer info
@@ -120,7 +122,11 @@ const getVolunteers = (volunteers) => {
       const volunteerURL = `${config.AIRTABLE_VOLUNTEERS_VIEW_URL}/${volunteer.record.id}`;
       const volunteerText = `<${volunteerURL}|${volunteer.Name}> - ${
         volunteer.Number
-      } - ${volunteer.Distance.toFixed(2)} Mi.`;
+      }${
+        typeof volunteer.Distance === "number"
+          ? ` - ${volunteer.Distance.toFixed(2)} Mi.`
+          : ""
+      }`;
 
       volObject.push(getSection(volunteerText));
     });
